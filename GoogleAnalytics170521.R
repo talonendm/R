@@ -11,5 +11,8 @@
 library(googleAnalyticsR)
 
 
+# ADDED cd talonendm; cd R; git add .
+# TO COMMIT: git commit -m '170521 Samsung AnalyticsR fixed' talonendm/R/GoogleAnalytics170521.R
 
-
+# git commit -m '170521 Samsung AnalyticsR fixed' ~/talonendm/R/GoogleAnalytics170521.R
+#
