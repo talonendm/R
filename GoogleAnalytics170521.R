@@ -14,5 +14,15 @@ library(googleAnalyticsR)
 # ADDED cd talonendm; cd R; git add .
 # TO COMMIT: git commit -m '170521 Samsung AnalyticsR fixed' talonendm/R/GoogleAnalytics170521.R
 
+
+# SAVE FILE and Run this command:
 # git commit -m '170521 Samsung AnalyticsR fixed' ~/talonendm/R/GoogleAnalytics170521.R
 #
+# 
+# 
+
+# Git not working this way
+# a <- system("git commit -m '170521 Samsung AnalyticsR fixed' ~/talonendm/R/GoogleAnalytics170521.R")
+
+# b <- system("git push origin master")
+t1 <- try(system("who", intern = TRUE))
