@@ -191,7 +191,11 @@ for (i in kuvat) {
   print(paste0(iiii," / ",length(kuvat),". Total images:",iii,". img:",i,", ",i_p))
   }
 }
-#   
+#   Git: talonendm, .1+......
+# git 170525
+# git add .
+# git commit -am "R code for timelapse v2, create video on command line with FFmpeg"
+# git push origin master
 #   setwd('/home/jaakko/Documents/gopro/130GOPRO')
 # 
 # 
