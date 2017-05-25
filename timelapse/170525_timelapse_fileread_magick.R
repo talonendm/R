@@ -1,10 +1,24 @@
+
+
+# linux: copied from file exploderer.
+# /media/jaakko/NO NAME/DCIM/100MEDIA
+# /media/jaakko/NO NAME/DCIM/101MEDIA
+# /media/jaakko/NO NAME/DCIM/102MEDIA
+# /media/jaakko/NO NAME/DCIM/103MEDIA
+# /media/jaakko/NO NAME/DCIM/104MEDIA
+# /media/jaakko/NO NAME/DCIM/105MEDIA
+
 # ---------------------------------------
+# read folder names:  
 # Quick and dirty solution for Timelapse video
 # zoom large images
 # crop and scale
 # 170519 - gopro
 # samsung, ubuntu, magick
 # ----------------------------------------
+
+
+
 
 # install.packages("magick")
 # https://cran.r-project.org/web/packages/magick/vignettes/intro.html
@@ -91,56 +105,92 @@ image_write(frames, path = "taloframes.gif", format = "gif",quality=50)
 readLines(pipe("ls -1"))
 
 
-# kansio 130
-kansio <- 130
-kuvat <- c(24136:25112)
 
-kansio <- 131
-kuvat <- c(25113:26111)
 
-kansio <- 132
-kuvat <- c(26112:27110)
+kameranimi <- 'riistakamera' # 'gopro'
 
-kansio <- 133
-kuvat <- c(27111:28109)
+ii <- 0
 
-kansio <- 134
-kuvat <- c(28110:28961)
+path_folders_i <- paste0('/home/jaakko/Documents/',kameranimi,'/')
+allfolders <- list.dirs(path_folders_i)
+inputfolders <- allfolders[grep('MEDIA',  list.dirs(path_folders_i))]
+path_o <- allfolders[grep('output',  list.dirs(path_folders_i))]
 
-if (kansio == 130) {
-  alkuzoomi = T
-  ii = 100
-} else {
-  alkuzoomi = F
-  ii = 0
-}
-path_i <- paste0('/home/jaakko/Documents/gopro/',kansio,'GOPRO/')
-path_o <- '/home/jaakko/Documents/gopro/output/'
+# path_i <- paste0('/home/jaakko/Documents/gopro/',kansio,'GOPRO/')
+# path_o <- paste0(path_folders_i,'output/')
+# path_o <- grep('output',  list.dirs(path_folders_i))
+
+path_i <- inputfolders[1]                 
+                 
+                 
 setwd(path_i)
+
+kuvat <- list.files(path_i)
+
+kuvat[1]
+
+test5pics <- F
+
+if (test5pics) {
+   i <- 130
+   talo <- image_read(kuvat[i])
+   image_info(talo)
+   talo2 <- image_scale(talo,'200')
+   image_info(talo2)
+   # talo2 <- image_crop(talo, "1600x1200+940+350")
+   talo2 <- image_crop(talo, "1280x720+490+380")
+   image_info(talo2)
+   print(image_scale(talo2,'300')) # to fit to preview window
+   
+   talo2 <- image_crop(talo, "720x576+490+380")
+   talo2 <- image_scale(talo,"1280")
+   image_info(talo2)
+   print(image_scale(talo2,'300')) # to fit to preview window
+   
+   
+    kuvat <- kuvat[1:5]
+}
+
 
 videokoko <- 12800
 
 
 iii = 0
+
+for (i_p in inputfolders) {
+  
+  setwd(i_p)
+  print(i_p)
+  
+  kuvat <- list.files(path_i)
+  if (test5pics) {
+    kuvat <- kuvat[1:5]
+  }
+  iiii <- 0  
+
 for (i in kuvat) {
   iii = iii + 1
-  talo <- image_read(paste0("G00",i,".JPG"))
+  iiii = iiii + 1
+  talo <- image_read(i)
   if (videokoko == 1280) {
     talo2 <- image_crop(talo, "1280x720+990+780")  
   } else {
     # DVD-videon resoluutio on korkeintaan 720×576 pikseliä (PAL)
-    ii = ii - 1
-    if (ii<0) {ii=0}
-    skaala <- as.character(2400 - ii)
-    talo2a <- image_scale(talo,skaala)
+    # ii = ii - 1
+    # if (ii<0) {ii=0}
+    # skaala <- as.character(2400 - ii)
+    # talo2a <- image_scale(talo,skaala)
+    # 
+    # talo2 <- image_crop(talo2a, "720x576+720+480")
     
-    talo2 <- image_crop(talo2a, "720x576+720+480")  
+    talo2 <- image_scale(talo,"1280")
+    
   }
   
-  image_write(talo2, path = paste0(path_o,"talo",i,".jpg"), format = "jpg",quality=40)
-  print(paste(iii,"/",length(kuvat),". img:",i))
+  image_write(talo2, path = paste0(path_o,"//talo",iii,".jpg"), format = "jpg",quality=40)
+  print(paste0(iiii," / ",length(kuvat),". Total images:",iii,". img:",i,", ",i_p))
   }
-  
+}
 #   
 #   setwd('/home/jaakko/Documents/gopro/130GOPRO')
 # 
